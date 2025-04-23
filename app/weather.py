@@ -13,4 +13,4 @@ def get_weather(location):
     response = requests.get(url)
     #↑stores api's respoonse in 'response'
     return response.json()
-#→→→→→↑takes the raw jsaon file from the api and converts it into data
+#→→→→→↑takes the raw json file from the api and converts it into data
