@@ -1,0 +1,44 @@
+<!-- This is the HTML document type declaration -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Metadata and title of the page -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Summit Weather</title>
+    <!-- Link to the external CSS stylesheet -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Main heading of the index page -->
+    <h1>Welcome to Summit Weather</h1>
+    <!-- Section to display weather information -->
+    <div id="weather-info">
+      <!-- Placeholder for weather data -->
+      <p>Loading weather data...</p>
+    </div>
+    <!-- Script to fetch and display weather data dynamically -->
+    <script>
+      // Fetch weather data from the server
+      fetch("/weather")
+        .then((response) => response.json())
+        .then((data) => {
+          // Update the weather-info div with fetched data
+          const weatherInfo = document.getElementById("weather-info");
+          weatherInfo.innerHTML = `
+                    <p>Location: ${data.location}</p>
+                    <p>Temperature: ${data.temperature}°F</p>
+                    <p>Condition: ${data.condition}</p>
+                `;
+        })
+        .catch((error) => {
+          // Handle errors and display a message
+          const weatherInfo = document.getElementById("weather-info");
+          weatherInfo.innerHTML = "<p>Failed to load weather data.</p>";
+        });
+    </script>
+  </body>
+</html>

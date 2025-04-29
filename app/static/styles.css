@@ -1,0 +1,53 @@
+/* General styles for the body */
+body {
+  /* Set the font family for the entire page */
+  font-family: Arial, sans-serif;
+  /* Add some padding around the content */
+  padding: 20px;
+}
+
+/* Style for the main heading */
+h1 {
+  /* Center the text */
+  text-align: center;
+  /* Set the color of the text */
+  color: #333;
+}
+
+/* Style for the form labels */
+label {
+  /* Set the font weight to bold */
+  font-weight: bold;
+}
+
+/* Style for the input fields */
+input {
+  /* Add some padding inside the input fields */
+  padding: 5px;
+  /* Set the width of the input fields */
+  width: 100%;
+  /* Add a border around the input fields */
+  border: 1px solid #ccc;
+  /* Add some margin below each input field */
+  margin-bottom: 10px;
+}
+
+/* Style for the submit button */
+button {
+  /* Set the background color of the button */
+  background-color: #4caf50;
+  /* Set the color of the text on the button */
+  color: white;
+  /* Add some padding inside the button */
+  padding: 10px 15px;
+  /* Remove the border around the button */
+  border: none;
+  /* Set the cursor to pointer when hovering over the button */
+  cursor: pointer;
+}
+
+/* Add hover effect for the button */
+button:hover {
+  /* Darken the background color when hovering */
+  background-color: #45a049;
+}
