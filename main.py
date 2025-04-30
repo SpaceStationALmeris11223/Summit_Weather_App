@@ -3,6 +3,10 @@ from app import create_app
 app = create_app()
 
 if __name__ == "__main__":
-# ↑ only runs if its the main file
+# ↑ only runs if it's the main file
 #starts the app ↓ in debug mo
     app.run(debug=True)
+
+
+def create_app():
+    return None
