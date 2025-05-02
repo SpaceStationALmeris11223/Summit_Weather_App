@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Summit Weather App</title>
+</head>
+<body>
+    <h1>Welcome to Summit Weather!</h1>
+
+    {% if weather %}
+        <h2>Current Weather:</h2>
+        <ul>
+            <li>Temperature: {{ weather.current.temperature_2m }} °F</li>
+            <li>Is Daytime: {{ 'Yes' if weather.current.is_day else 'No' }}</li>
+            <li>Wind Speed: {{ weather.current.wind_speed_10m }} mph</li>
+            <li>Wind Direction: {{ weather.current.wind_direction_10m }}°</li>
+            <li>Rain: {{ weather.current.rain }} inches</li>
+            <li>Showers: {{ weather.current.showers }} inches</li>
+            <li>Snowfall: {{ weather.current.snowfall }} inches</li>
+            <li>Weather Code: {{ weather.current.weather_code }}</li>
+        </ul>
+
+        <h2>Forecast:</h2>
+        <ul>
+            {% for day in weather.daily.time %}
+                <li>
+                    Date: {{ day }}<br>
+                    Max Temp: {{ weather.daily.temperature_2m_max[loop.index0] }} °F<br>
+                    Min Temp: {{ weather.daily.temperature_2m_min[loop.index0] }} °F<br>
+                    Weather Code: {{ weather.daily.weather_code[loop.index0] }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Weather data is currently unavailable.</p>
+    {% endif %}
+</body>
+</html>
