@@ -29,7 +29,7 @@ body {
     cursor: pointer;
     padding: 10px;
     font-size: 24px;
-    color: #432019;  /* Dark brown for menu button */
+    color: #432019;
 }
 
 .main-content {
@@ -59,9 +59,7 @@ body {
     z-index: 1;
 }
 
-/* Ensure map tiles load properly */
 .leaflet-container {
-    background-color: rgba(248, 227, 186, 0.5);  /* Semi-transparent beige */
     border-radius: 8px;
 }
 
@@ -74,7 +72,6 @@ body {
 
 .leaflet-popup-content-wrapper {
     border-radius: 4px;
-    background-color: rgba(248, 227, 186, 0.5);  /* Semi-transparent beige */
 }
 
 .current-weather {
