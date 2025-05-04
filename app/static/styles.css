@@ -63,7 +63,6 @@ body {
     border-radius: 8px;
 }
 
-/* Style the popup */
 .leaflet-popup-content {
     margin: 8px;
     font-family: Arial, sans-serif;
