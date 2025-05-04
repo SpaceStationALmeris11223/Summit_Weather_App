@@ -84,15 +84,12 @@
     </div>
 
     <script>
-        // Initialize the map with coordinates from Flask
         const map = L.map('map').setView([{{ latitude }}, {{ longitude }}], 10);
 
-        // Add OpenStreetMap tiles
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Add a marker at the same coordinates
         const marker = L.marker([{{ latitude }}, {{ longitude }}]).addTo(map);
     </script>
 </body>
