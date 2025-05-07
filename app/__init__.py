@@ -22,5 +22,10 @@ def create_app():
 #    ↑imports the routes Aka different pages(urls)
 #   ↓plugs in (connects) the recently imported routes to the app
     app.register_blueprint(main)
-    return app
 
+#Creats ↓ context for the app, allows the code to safely access things ties to FLask(database)
+    with app.app_context():
+        db.create_all()#Creates our tables based on model
+        #↑ will return an error without App_context
+#Without it flask doesn't know which app your reffering to when your outside a request(pyshell, setup scripts, etc)
+    return app
