@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset=""UTF-8>
+    <meta charset="UTF-8">
     <title>Register - Summit Weather App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
 
 </head>
 <body>
     <h2>Register for Summit Weather</h2>
-#Gets any flash messages sent from the route↓
+<!--Gets any flash messages sent from the route-->
     {% with messages = get_flashed_messages() %}
-#checks↓ if a message was recived
+<!--#checks↓ if a message was recived-->
     {% if messages %}
-#creates↓ an unordered list that holds all the flash messages
+<!--creates↓ an unordered list that holds all the flash messages-->
     <ul class="flash-messages">
     {% for message in messages %}
     <li>{{ message }}</li>
     {% endfor %}
-#loops through the↑ messages
+<!----loops through the↑ messages-->
 </ul>
 {% endif %}
 {% endwith %}
 
 <form method="post">
     <label>Username</label><br>
-    <input type="text" name="username required><br><br>
+    <input type="text" name="username" required><br><br>
 
     <label>Password </label><br>
-    <input type="password name="password required><br><br>
+    <input type="password" name="password" required><br><br>
 
     <button type="submit">Create Account</button>
     
 </form>
 
-<p>Already have an Account <a href="{{ url_for(main.login)  }}">Log in</a></p>
+<p>Already have an Account <a href="{{ url_for('main.login')  }}">Log in</a></p>
 </body>
 </html>

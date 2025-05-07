@@ -7,16 +7,16 @@
 </head>
 <body>
     <h2>Login to Summit Weather</h2>
-#Gets any flash messages↓ sent from the route
-    {% messages = get_flashed_messages() %}
-    #checks↓ if a message was recived
+<!--Gets any flash messages↓ sent from the route-->
+    {% with messages = get_flashed_messages() %}
+    <!--checks↓ if a message was recived-->
         {% if messages %}
-        #creates↓ an unordered list that holds all the flash messages
+        <!--creates↓ an unordered list that holds all the flash messages-->
         <ul class="flash-messages">
             {% for message in messages %}
-            <li>{{message }}</li>
+            <li>{{ message }}</li>
             {% endfor %}
-    #loops through the↑ messages
+    <!--loops through the↑ messages-->
 
         </ul>
         {% endif %}

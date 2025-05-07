@@ -21,8 +21,32 @@
             crossorigin=""></script>
 </head>
 <body>
-    <div class="nav-container">
-        <button class="menu-button">☰</button>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-end">
+    <div class="container-fluid">
+            <a class= "navbar-brand "href="{{ url_for('main.home')}}">Summit Weather</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            ☰</button>
+
+
+            <div class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link"href="{{ url_for('main.register')}}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"href="{{ url_for('main.login')}}">Login</a>                    
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"href="{{ url_for('main.logout')}}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+    </div>
+</nav>
+
+    <div class="container mt-r">
+        {%block content %}{% endblock %}
     </div>
 
     <div class="main-content">
@@ -82,7 +106,7 @@
             {% endif %}
         </div>
     </div>
-
+{% if latitude and longitude %}
     <script>
         const map = L.map('map').setView([{{ latitude }}, {{ longitude }}], 10);
 
@@ -92,5 +116,6 @@
 
         const marker = L.marker([{{ latitude }}, {{ longitude }}]).addTo(map);
     </script>
+{% endif %}
 </body>
 </html>

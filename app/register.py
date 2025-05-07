@@ -8,11 +8,12 @@ import re
 
 
 
-@main.route("/register', methods=['GET', 'POST']")
+@main.route("/register", methods=['GET', 'POST'])
 def register():
     if request.method =="POST":
+        
 #cleans up the form inputs↓
-        username = escape(request.form.get("Username", "").strip())
+        username = escape(request.form.get("username", "").strip())
         password = request.form.get("password", "").strip()
         
 #validate username input
@@ -22,16 +23,17 @@ def register():
 
     #validate password input
         if (len(password) < 8 or
-            not re.search(r'[a-zA-Z]', password)):
-            not re.search(r'\d', password)
+            not re.search(r'[a-zA-Z]', password) or
+            not re.search(r'\d', password) or
             not re.search(r'[!@#$%^&*(),.?":{}|<>]', password)
+        ):
             flash("Password must be 8+characters, includes letters, numbers,and symbols.")
-            return redirect(url_for("main.home"))
+            return redirect(url_for("main.register"))
         
     #profanity check
         if profanity.contains_profanity(username) or profanity.contains_profanity(password):
             flash("Username or password uses inappropriate language")
-            return redirect(url_for("main.home"))
+            return redirect(url_for("main.register"))
 
     #store user using set_passoword
         new_user = User(username=username)
@@ -45,4 +47,4 @@ def register():
             db.session.rollback()
             flash("Username already exist or an error occurred.")
             return redirect(url_for("main.register"))
-    return render_template("main.home")
+    return render_template("register.html")
