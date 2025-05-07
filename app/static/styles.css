@@ -1,0 +1,267 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+body {
+    font-family: 'Josefin Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.menu-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 24px;
+    color: #432019;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.weather-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+#map {
+    height: 400px;
+    width: 400px;
+    margin: 0 auto 30px;
+    border-radius: 8px;
+    z-index: 1;
+}
+
+.leaflet-container {
+    border-radius: 8px;
+}
+
+.leaflet-popup-content {
+    margin: 8px;
+    font-family: Arial, sans-serif;
+    color: #432019;
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 4px;
+}
+
+.current-weather {
+    padding: 15px;
+    margin: 20px auto;
+    border-radius: 8px;
+    width: 60%;
+    max-width: 500px;
+}
+
+.weather-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.weather-item {
+    padding: 8px;
+    text-align: center;
+    width: 100%;
+}
+
+.weather-item p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.forecast {
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 800px;
+}
+
+.forecast-list {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 20px 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #939a66 rgba(147, 154, 102, 0.1);
+    -webkit-overflow-scrolling: touch;
+}
+
+.forecast-list::-webkit-scrollbar {
+    height: 8px;
+}
+
+.forecast-list::-webkit-scrollbar-track {
+    background: rgba(147, 154, 102, 0.1);
+    border-radius: 4px;
+}
+
+.forecast-list::-webkit-scrollbar-thumb {
+    background-color: #939a66;
+    border-radius: 4px;
+}
+
+.forecast-item {
+    flex: 0 0 auto;
+    width: 200px;
+    padding: 15px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.forecast-item p {
+    margin: 5px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+h1, h2 {
+    font-family: 'The Seasons', serif;
+    color: #939a66;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 2.5em;
+    font-weight: 400;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 1.5em;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.error-message {
+    color: #cd581b;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #cd581b;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.location-form {
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 500px;
+    width: 100%;
+    border-radius: 8px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label {
+    font-size: 18px;
+    color: #939a66;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+}
+
+input[type="text"] {
+    padding: 12px;
+    border: 1px solid #939a66;
+    border-radius: 4px;
+    font-size: 18px;
+    font-family: 'Josefin Sans', sans-serif;
+    color: #333;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #cd581b;
+}
+
+button {
+    padding: 12px 24px;
+    background-color: #939a66;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #cd581b;
+}
+
+@media (max-width: 768px) {
+    .weather-container {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    .current-weather, .forecast {
+        width: 90%;
+    }
+
+    .forecast-item {
+        width: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .weather-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .forecast-item {
+        width: 160px;
+    }
+}
