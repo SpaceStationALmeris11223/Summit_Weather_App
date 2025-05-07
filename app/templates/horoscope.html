@@ -4,16 +4,33 @@
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Horoscope</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     </head>
     <body>
-        <h1>{{ sign|default("Your") }} Horoscope</h1>
-        
-        {% if horoscope %}
-            <p>{{ horoscope }}</p>
+        <h1> Horoscope</h1>
+        <form method="POST">
+            <label for="sign">Choose your zodiac sign:</label>
+            <select name="sign" id="sign">
+                <option value="aries">Aries</option>
+                <option value="taurus">Taurus</option>
+                <option value="gemini">Gemini</option>
+                <option value="cancer">Cancer</option>
+                <option value="leo">Leo</option>
+                <option value="virgo">Virgo</option>
+                <option value="libra">Libra</option>
+                <option value="scorpio">Scorpio</option>
+                <option value="sagittarius">Sagittarius</option>
+                <option value="capricorn">Capricorn</option>
+                <option value="aquarius">Aquarius</option>
+                <option value="pisces">Pisces</option>
+            </select>
+            <button type="submit">Get Horoscope</button>
+        </form>
+        {% if data %}
+            <p>{{ data.description }}</p>
         {% else %}
             <p>No horoscope data available.</p>
         {% endif %}
 
-        <a href="/select-sign"> Choose Another Sign</a>
     </body>
 </html>
