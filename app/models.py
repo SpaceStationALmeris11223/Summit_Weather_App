@@ -1,8 +1,7 @@
-from flask_sqlalchemy import    SQLAlchemy
+from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 #this files purpose is to help defin the  structure of the database.
 #Classes that will represent tables will be created here.
-db = SQLAlchemy()
 
 #↓defines user as a class
 class User(db.Model):

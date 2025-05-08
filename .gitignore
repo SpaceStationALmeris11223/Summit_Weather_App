@@ -1,2 +1,7 @@
+__pycach__/
+*.pyc
+*.pyo
+*.pyd
+venv/
 .env
 #prevents api key from accidenlty being pushed to github
