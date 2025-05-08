@@ -34,29 +34,33 @@ Validation functions route start↓
 #defines what↓ a valid username is
 def valid_username(username):
     if not re.match(r"^[a-zA-Z0-9_]{3,20}$", username):
-        return False
+        return False,   "Username must be between 3 - 20 characters, letters, numbers, underscores only."     
 #Usernames cannot contain profanity↓
     if profanity.contains_profanity(username):
-        return False
-    return True
+        return False,    "Inappropriate word detected"
+    return True, ""
 #defines what↓ a valid password is
 def valid_password(password):
 #Must be at least 8 Char↓
     if len(password) < 8:
-        return False
+        return False,  "Password must be at least 8 characters"
+
 #must have at least 1 letter↓
-    if not re.search(r'[a-zA-Z]', password):
-        return False
+    if not re.search(r"[a-zA-Z]", password):
+       return False, "Password must include at least one letter."
+
 #must have at least 1number 
-    if not re.search(r'\d', password):
-        return False
+    if not re.search(r"\d", password):
+        return False,"Password must include at least one number"
+
 #must have at least 1 punctuation mark
     if not re.search(r'[!@#$%^&*()_+\[\]{};:\'",.<>/?\\|`~]', password):
-        return False
+        return False,"Password must contain at least one special character"
 #pword cannot contain profanity
     if profanity.contains_profanity(password):
-        return False
-    return True
+        return False,    "Username or password contains innaporpriate language"
+    return True, ""
+
 """
 Validation functions route end↑
 """
@@ -71,25 +75,23 @@ def register():
         username = escape(request.form.get("username", "").strip())
         password = request.form.get("password", "")
 
-        #input validation
-        if not valid_username(username):
-            flash("Invalid username. User only letters, numbers, and underscores(3-20 chars)")
+        valid_user, bad_u_msg = valid_username(username)
+        #Username Check↓
+        if not valid_user:
+            flash(bad_u_msg)
             return redirect(url_for("main.register"))
-        if not valid_password(password):
-            flash("Password must be at least 8 characters.")
+        
+        valid_pass, bad_pass_msg = valid_password(password)
+        if not valid_pass:
+            flash(bad_pass_msg)
             return redirect(url_for("main.register"))
         
         #checks if user already exist↓
         existing_user = User.query.filter_by(username=username).first()
         if existing_user:
-            flash("Username already exists.")
+            flash("Username is already taken.")
             return redirect(url_for("main.register"))
         
-#prevents profanity as a vaild username and informs user↓
-        if profanity.contains_profanity(username) or profanity.contains_profanity(password):
-            flash("Username or Password containts inappropiate language. Please choose something else")
-            return redirect(url_for("main.register"))
-
 #creates and ↓saves user
         new_user = User(username=username)
         new_user.set_password(password)
@@ -112,15 +114,10 @@ Login Route Starts ↓
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = escape(request.form.get('username', '').strip())
-        password = request.form.get('password', "").strip()
-
-        if not username or not password:
-            flash("Please enter a username and a password.")
-            return redirect(url_for("main.login"))
+        username = escape(request.form.get("username", "").strip())
+        password = request.form.get("password", "").strip()
 
         user = User.query.filter_by(username=username).first()
-
         if user and user.check_password(password):
             session["user_id"] = user.id
             flash("Logg in successful!")

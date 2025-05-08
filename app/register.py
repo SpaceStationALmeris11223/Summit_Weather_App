@@ -16,11 +16,17 @@ def register():
         username = escape(request.form.get("username", "").strip())
         password = request.form.get("password", "").strip()
         
+ 
+def valid_username(username):
 #validate username input
         if not re.match(r"^[a-zA-Z0-9_]{3,20}$", username):
             flash("Username must be 3-20 characters, letter/numbers only.")
-            return redirect(url_for("main.home"))
+            return redirect(url_for("main.register"))
+        if profanity.contains_profanity(username):
+            flash("Username contains inappropriate langauge.")
+            return redirect(url_for("main.register"))
 
+def valid_password(password):
     #validate password input
         if (len(password) < 8 or
             not re.search(r'[a-zA-Z]', password) or

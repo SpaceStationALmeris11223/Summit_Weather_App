@@ -1,0 +1,17 @@
+<!--This page adds fearues to all other pages exp navbar,-->
+<head>lin</head>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('main.home') }}">Summit weather</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"  data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>       
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('main.register') }}">Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('main.login') }}">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('main.logout') }}">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

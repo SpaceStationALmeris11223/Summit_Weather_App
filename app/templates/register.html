@@ -33,6 +33,35 @@
     
 </form>
 
+<<<<<<< Updated upstream
+<p>Already have an Account <a href="{{ url_for(main.login)  }}">Log in</a></p>
+=======
 <p>Already have an Account <a href="{{ url_for('main.login')  }}">Log in</a></p>
+<script>
+    document.querySelector("input[name='password']").addEventListener("input", function(){
+       const password = this.value;
+       const feedback = document.getElementById("password-feedback");
+       let messages = [];
+       
+       if (password.length < 8) {
+            messages.push("Password needs at least 8 characters");
+       }
+       if (!/[a-zA-Z]/.test(password)){
+            messages.push("Password needs at least one letter")
+       }
+        if (!/\d/.test(password)){
+            messages.push("Password needs at least one number")
+        }
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)){
+            messages.push("Password needs at least one speical character")
+        }
+        
+        feedback.innerHTML = message.length > 0
+        ? "Password must include: " + messages.join(", ")
+        : "";
+
+    });
+</script>
+>>>>>>> Stashed changes
 </body>
 </html>
