@@ -22,7 +22,10 @@ def home():
     latitude = 44.9778  # Example default: Minneapolis
     longitude = -93.2650
     weather_data = get_weather(latitude, longitude)
-    return render_template('index.html', weather=weather_data)
+    return render_template('index.html', 
+                         weather=weather_data,
+                         latitude=latitude,
+                         longitude=longitude)
 """
 Main Route ends↑"""
 """
