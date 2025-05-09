@@ -1,63 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register - Summit Weather App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
-
-</head>
+<!--Layout hs the doctype html stuff so we don't need them for any other html page-->
 <body>
 {% extends "layout.html" %}
 
+{% block title %}Register - Summit Weather{% endblock %}
+
 {% block content %}
-    <h2>Register for Summit Weather</h2>
-<!--Gets any flash messages sent from the route↓-->
-    {% with messages = get_flashed_messages() %}
-<!--checks↓ if a message was recived-->
-    {% if messages %}
-<!--creates↓ an unordered list that holds all the flash messages-->
-<!--creates↓ an unordered list that holds all the flash messages-->
-    <ul class="flash-messages">
-    {% for message in messages %}
-        <li>{{ message }}</li>
-    {% endfor %}
-<!--loops through the↑ messages-->
-    </ul>
-{% endif %}
-{% endwith %}
 
+<h2>Register for Summit Weather</h2>
 <form method="post">
-    <label>Username</label><br>
-    <input type="text" name="username" required><br><br>
+<div class="mb-3">
+    <label for="username" class="form-label">Username</label>
+    <input type="text" class="form-control" name="username" required>
+</div>
 
-    <label>Password </label><br>
-    <input type="password" name="password" required><br><br>
-
-    <button type="submit">Create Account</button>
-    
+<div class="mb-3">
+    <label for="password" class="form-label">Password </label>
+    <input type="password" name="password" class="form-control" required>
+    <div id="password-feedback" class="form-text text-danger mt-1"></div>
+    </div>   
+    <button type="submit" class="btn btn-primary">Create Account</button>
 </form>
 
-<p>Already have an Account <a href="{{ url_for('main.login')  }}">Log in</a></p>
+<p class="mt-3">Already have an Account <a href="{{ url_for('main.login')  }}">Log in</a></p>
 <script>
     document.querySelector("input[name='password']").addEventListener("input", function(){
        const password = this.value;
        const feedback = document.getElementById("password-feedback");
        let messages = [];
-       
+
        if (password.length < 8) {
-            messages.push("Password needs at least 8 characters");
-       }
+            messages.push("Password needs at least 8 characters");}
        if (!/[a-zA-Z]/.test(password)){
-            messages.push("Password needs at least one letter")
-       }
+            messages.push("Password needs at least one letter")}
         if (!/\d/.test(password)){
-            messages.push("Password needs at least one number")
-        }
+            messages.push("Password needs at least one number")}
         if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)){
-            messages.push("Password needs at least one speical character")
-        }
+            messages.push("Password needs at least one speical character")}
         
-        feedback.innerHTML = message.length > 0
+        feedback.innerHTML = messages.length > 0
         ? "Password must include: " + messages.join(", ")
         : "";
     });

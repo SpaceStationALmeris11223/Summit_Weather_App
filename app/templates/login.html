@@ -1,40 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login - Summit Weather</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
+<!--Layout hs the doctype html stuff so we don't need them for any other html page-->
 <body>
 {% extends "layout.html"    }
 
-{% block  content %}
-    <h2>Login to Summit Weather</h2>
-<!--Gets any flash messages↓ sent from the route-->
-{% messages = get_flashed_messages() %}
-    <!--checks↓ if a message was recived-->
-    {% if messages %}
-        <!--creates↓ an unordered list that holds all the flash messages-->
-        <ul class="flash-messages">
-        {% for message in messages %}
-          <li>{{message }}</li>
-        {% endfor %}
-    <!--loops through the↑ messages-->
+{% block title %}Login - Summit Weather{% endblock %}
 
-        </ul>
-    {% endif %}
-{% endwith %}
+{% block  content %}
+ <h2>Login to your Summit Weather account</h2>
 
     <form method="POST">
-        <label>Username:</label><br>
-        <input type="text" name="username" required><br><br>
+        <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" name="username" class="form-control"><br><br>
+        </div>
 
-        <label for="Password"></label><br>
-        <input type="password" name="password" required><br><br>
+        <div class="mb-3">
+        <label for="Password" class="form-label">Password</label>
+        <input type="password" name="password" class="form-control" required>
+        </div>
 
-        <button type="submit">Log In </button>
+        <button type="submit" class="btn btn-primary">Log In </button>
     </form>
-    <p>Don't have an Account <a href="{{ url_for('main.register') }}">Register here</a></p>
+
+    <p>Don't have an Account? <a href="{{ url_for('main.register') }}">Register here</a></p>
     {% endblock %}
 </body>
 </html>
