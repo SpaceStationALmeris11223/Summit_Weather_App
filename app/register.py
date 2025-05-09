@@ -1,4 +1,4 @@
-from flask import request, redirect, url_for, render_template, flash
+from flask import request, redirect, url_for, render_template, flash,session
 from werkzeug.security import generate_password_hash
 from .models  import db, User
 from markupsafe import escape
@@ -16,6 +16,7 @@ def valid_username(username):
 
 def valid_password(password):
     #validate password input
+
         if len(password) < 8:
             flash("Password must be at least 8 characters")
             return False
@@ -30,38 +31,46 @@ def valid_password(password):
             return False
         return True
 
-    
+ 
 
 @main.route("/register", methods=['GET', 'POST'])
 def register():
     if request.method =="POST":    
-    #cleans up the form inputs↓
-            username = escape(request.form.get("username", "").strip())
-            password = request.form.get("password", "").strip()     
+        #cleans up the form inputs↓
+        username = escape(request.form.get("username", "").strip())
+        password = request.form.get("password", "").strip()     
 
-            if not valid_username(username):
-                    flash("Invalid username.")
-                    return redirect(url_for("main.register"))
-            
-            if not valid_password(password):
-                    flash("Password must be at least 8 characters and include a letter, number, and special character")
-                    return redirect(url_for("main.register"))
 
-            existing_user = User.query.filter_by(username=username).first()
-            if existing_user:
-                flash("Username already exist.")
+            #validate inputs
+        username_invalid = valid_username(username)
+        password_invalid = valid_password(password)
+        #username check
+        if username_invalid:
+                for error in username_invalid:
+                    flash(error)
                 return redirect(url_for("main.register"))
+        #password check
+        if password_invalid:
+            for error in password_invalid:
+                    flash(error)
+            return redirect(url_for("main.register"))
+            #if username exist
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
+            flash("Username already exist.")
+            return redirect(url_for("main.register"))
 
-        #store user using set_password
-            new_user = User(username=username)
-            new_user.set_password(password)
-            try:
-                db.session.add(new_user)
-                db.session.commit()
-                flash("Account created")
-                return redirect(url_for("main.home"))
-            except:
-                db.session.rollback()
-                flash("error occurred during registration.")
-                return redirect(url_for("main.register"))
+        #create new user
+        new_user = User(username=username)
+        new_user.set_password(password)
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            session["user_id"] = new_user.id #auto login
+            flash("Account created!")
+            return redirect(url_for("main.home"))
+        except Exception as e:
+            db.session.rollback()
+            flash("error occurred during registration.")
+            return redirect(url_for("main.register"))
     return render_template("register.html")

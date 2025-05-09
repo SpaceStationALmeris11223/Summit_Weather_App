@@ -37,25 +37,23 @@ def valid_username(username):
     return True, ""
 #defines what↓ a valid password is
 def valid_password(password):
+    errors = []
 #Must be at least 8 Char↓
     if len(password) < 8:
-        return False,  "Password must be at least 8 characters"
-
+        errors.append("Password must be at least 8 characters")
 #must have at least 1 letter↓
     if not re.search(r"[a-zA-Z]", password):
-       return False, "Password must include at least one letter."
-
+       errors.append("Password must include at least one letter.")
 #must have at least 1number 
     if not re.search(r"\d", password):
-        return False,"Password must include at least one number"
-
+        errors.append("Password must include at least one number")
 #must have at least 1 punctuation mark
     if not re.search(r'[!@#$%^&*()_+\[\]{};:\'",.<>/?\\|`~]', password):
-        return False,"Password must contain at least one special character"
+        errors.append("Password must contain at least one special character")
 #pword cannot contain profanity
     if profanity.contains_profanity(password):
-        return False,    "Username or password contains innaporpriate language"
-    return True, ""
+        errors.append("Username or password contains innaporpriate language")
+    return errors
 
 """
 Validation functions route end↑
@@ -73,13 +71,13 @@ def register():
 
         valid_user, bad_u_msg = valid_username(username)
         #Username Check↓
-        if not valid_user:
+        if valid_user:
             flash(bad_u_msg)
             return redirect(url_for("main.register"))
         
-        valid_pass, bad_pass_msg = valid_password(password)
-        if not valid_pass:
-            flash(bad_pass_msg)
+        valid_pass = valid_password(password)
+        if valid_pass:
+            flash("Password must inlcude: "+", ".join(valid_pass))
             return redirect(url_for("main.register"))
         
         #checks if user already exist↓
@@ -111,7 +109,7 @@ Login Route Starts ↓
 def login():
     if request.method == 'POST':
         username = escape(request.form.get("username", "").strip())
-        password = request.form.get("password", "").strip()
+        password = request.form.get("password", "")
 
         user = User.query.filter_by(username=username).first()
         if user and user.check_password(password):
@@ -130,9 +128,21 @@ Logout route starts ↓
 """
 @main.route('/logout')
 def logout():
-    session.pop("user_id", None)
+    session.clear()
+#clears all↑ session data including user id
     flash("You have been logged out.")
     return redirect(url_for("main.home"))
 """
 Logout route ends↑
 """
+"""
+Account route starts↓
+"""
+@main.route('/account')
+def account():
+    if "user_id" not in session:
+        flash("Pleas log in to access your account.")
+        return redirect(url_for('main.login'))
+    
+#if user is logged in ↓
+    return render_template("account.html")
