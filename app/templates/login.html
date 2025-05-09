@@ -6,21 +6,24 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+{% extends "layout.html"    }
+
+{% block  content %}
     <h2>Login to Summit Weather</h2>
-#Gets any flash messages↓ sent from the route
-    {% messages = get_flashed_messages() %}
-    #checks↓ if a message was recived
-        {% if messages %}
-        #creates↓ an unordered list that holds all the flash messages
+<!--Gets any flash messages↓ sent from the route-->
+{% messages = get_flashed_messages() %}
+    <!--checks↓ if a message was recived-->
+    {% if messages %}
+        <!--creates↓ an unordered list that holds all the flash messages-->
         <ul class="flash-messages">
-            {% for message in messages %}
-            <li>{{message }}</li>
-            {% endfor %}
-    #loops through the↑ messages
+        {% for message in messages %}
+          <li>{{message }}</li>
+        {% endfor %}
+    <!--loops through the↑ messages-->
 
         </ul>
-        {% endif %}
-    {% endwith %}
+    {% endif %}
+{% endwith %}
 
     <form method="POST">
         <label>Username:</label><br>
@@ -32,5 +35,6 @@
         <button type="submit">Log In </button>
     </form>
     <p>Don't have an Account <a href="{{ url_for('main.register') }}">Register here</a></p>
+    {% endblock %}
 </body>
 </html>

@@ -21,6 +21,8 @@
             crossorigin=""></script>
 </head>
 <body>
+{% extends "layout.html" %}
+ {% block content %}
     <div class="nav-container">
         <button class="menu-button">☰</button>
     </div>
@@ -28,16 +30,6 @@
     <div class="main-content">
         <div class="weather-container">
             <h1>Summit Weather</h1>
-
-            <form class="location-form" method="POST" action="/">
-                <div class="input-group">
-                    <label for="location">Location:</label>
-                    <input type="text" id="location" name="location" placeholder="City, State" required>
-                </div>
-                <button type="submit" class="submit-btn">Get Weather</button>
-            </form>
-
-            <div id="map"></div>
 
             {% if weather %}
                 <div class="current-weather">
@@ -80,6 +72,7 @@
             {% else %}
                 <p class="error-message">Weather data is currently unavailable.</p>
             {% endif %}
+        {% endblock %}
         </div>
     </div>
 
