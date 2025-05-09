@@ -23,47 +23,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-end">
-    <div class="container-fluid">
-            <a class= "navbar-brand "href="{{ url_for('main.home')}}">Summit Weather</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            ☰</button>
-
-
-            <div class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link"href="{{ url_for('main.register')}}">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link"href="{{ url_for('main.login')}}">Login</a>                    
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link"href="{{ url_for('main.logout')}}">Logout</a>
-                    </li>
-                </ul>
-            </div>
-    </div>
-</nav>
-
-    <div class="container mt-r">
-        {%block content %}{% endblock %}
+{% extends "layout.html" %}
+ {% block content %}
+    <div class="nav-container">
+        <button class="menu-button">☰</button>
     </div>
 
     <div class="main-content">
         <div class="weather-container">
             <h1>Summit Weather</h1>
-
-            <form class="location-form" method="POST" action="/">
-                <div class="input-group">
-                    <label for="location">Location:</label>
-                    <input type="text" id="location" name="location" placeholder="City, State" required>
-                </div>
-                <button type="submit" class="submit-btn">Get Weather</button>
-            </form>
-
-            <div id="map"></div>
 
             {% if weather %}
                 <div class="current-weather">
@@ -106,6 +74,7 @@
             {% else %}
                 <p class="error-message">Weather data is currently unavailable.</p>
             {% endif %}
+        {% endblock %}
         </div>
     </div>
 {% if latitude and longitude %}

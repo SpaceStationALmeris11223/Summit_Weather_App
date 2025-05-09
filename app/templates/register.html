@@ -7,18 +7,22 @@
 
 </head>
 <body>
+{% extends "layout.html" %}
+
+{% block content %}
     <h2>Register for Summit Weather</h2>
-<!--Gets any flash messages sent from the route-->
+<!--Gets any flash messages sent from the route↓-->
     {% with messages = get_flashed_messages() %}
-<!--#checks↓ if a message was recived-->
+<!--checks↓ if a message was recived-->
     {% if messages %}
+<!--creates↓ an unordered list that holds all the flash messages-->
 <!--creates↓ an unordered list that holds all the flash messages-->
     <ul class="flash-messages">
     {% for message in messages %}
-    <li>{{ message }}</li>
+        <li>{{ message }}</li>
     {% endfor %}
-<!----loops through the↑ messages-->
-</ul>
+<!--loops through the↑ messages-->
+    </ul>
 {% endif %}
 {% endwith %}
 
@@ -33,9 +37,6 @@
     
 </form>
 
-<<<<<<< Updated upstream
-<p>Already have an Account <a href="{{ url_for(main.login)  }}">Log in</a></p>
-=======
 <p>Already have an Account <a href="{{ url_for('main.login')  }}">Log in</a></p>
 <script>
     document.querySelector("input[name='password']").addEventListener("input", function(){
@@ -59,9 +60,8 @@
         feedback.innerHTML = message.length > 0
         ? "Password must include: " + messages.join(", ")
         : "";
-
     });
 </script>
->>>>>>> Stashed changes
+{% endblock %}
 </body>
 </html>

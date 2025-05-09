@@ -1,5 +1,10 @@
 <!--This page adds fearues to all other pages exp navbar,-->
-<head>lin</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Summit Weather App</title>
+</head>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ url_for('main.home') }}">Summit weather</a>
@@ -15,3 +20,19 @@
         </div>
     </div>
 </nav>
+
+<div class="container mt-4">
+    {% with message = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-info">
+                {% for message in messages %}
+                    <p>{{  message  }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+</div>
+
+</html>
