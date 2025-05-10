@@ -4,13 +4,14 @@ from .weather import get_weather
 from .models import User, db
 from markupsafe import escape
 #blocks profanity, so no slurs etc go into the username & passwords.
-#if you want to use this juts type
+#if you want to use this just type
 #pip install better_profanity
 from better_profanity import profanity
 
 import re
 
 main = Blueprint('main', __name__)
+
 profanity.load_censor_words()
 
 """

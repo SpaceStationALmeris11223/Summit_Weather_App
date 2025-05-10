@@ -1,5 +1,6 @@
 #Thsi files will pull flask and other relavant tools
 from flask import Flask
+from .routes import main
 # ↓ allows the app to use a database
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
@@ -7,8 +8,8 @@ from dotenv import load_dotenv
 import os
 #↑ Allows the app to interact with your operating system
 
-#Initialize database 
-db = SQLAlchemy()
+#A circular import was created so i made an extensions files to solve it 
+from .extensions import db 
 #↑ creates a database object
 def create_app():
     load_dotenv()

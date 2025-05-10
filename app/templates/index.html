@@ -73,7 +73,7 @@
         {% endblock %}
         </div>
     </div>
-
+{% if latitude and longitude %}
     <script>
         const map = L.map('map').setView([{{ latitude }}, {{ longitude }}], 10);
 
@@ -83,5 +83,6 @@
 
         const marker = L.marker([{{ latitude }}, {{ longitude }}]).addTo(map);
     </script>
+{% endif %}
 </body>
 </html>
