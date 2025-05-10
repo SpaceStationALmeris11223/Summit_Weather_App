@@ -68,36 +68,46 @@ def register():
     #sanatize user input(clean up)
         username = escape(request.form.get("username", "").strip())
         password = request.form.get("password", "")
-
+    #collects↓ errors to display
+        errors = []
         valid_user, bad_u_msg = valid_username(username)
         #Username Check↓
-        if valid_user:
-            flash(bad_u_msg)
-            return redirect(url_for("main.register"))
-        
+        if not valid_user:
+            errors.append(f"Username error: {bad_u_msg}")
+     
         valid_pass = valid_password(password)
-        if valid_pass:
-            flash("Password must inlcude: "+", ".join(valid_pass))
-            return redirect(url_for("main.register"))
+        if not valid_pass:
+            errors.append("Password must inlcude: "+", ".join(valid_pass))
         
         #checks if user already exist↓
         existing_user = User.query.filter_by(username=username).first()
         if existing_user:
-            flash("Username is already taken.")
+            errors.append("Username is already taken.")
+
+    #if there are any errors, flash them all and return
+        if errors:
+            for msg in errors:
+                flash(msg)
             return redirect(url_for("main.register"))
-        
-#creates and ↓saves user
+
+    #createw ↓saves new user if everything is valid.
         new_user = User(username=username)
         new_user.set_password(password)
-#takes the ↑raw password and creates a hashed version (examp: 2dsf6ads1f) and stores it
+    #takes the ↑raw password and creates a hashed version (examp: 2dsf6ads1f) and stores it
 
-#creates user and auto logs them in
-        db.session.add(new_user)
-        db.session.commit()#saves the user data to database
-#should auto load the user once accounts↓ is down might be more touble than worth
-        session["user_id"] = new_user.id
-        flash("Account created successfully! Welcome.")
-        return redirect(url_for("main.home"))
+    #creates user and auto logs them in
+        try:
+                db.session.add(new_user)
+                db.session.commit()#saves the user data to database
+        #should auto load the user once accounts↓ is down might be more touble than worth
+                session["user_id"] = new_user.id
+                flash("Account created successfully! Welcome.")
+                return redirect(url_for("main.home"))
+        except Exception as e:
+                db.session.rollback()
+                flash("An error occurred while creating your account.")
+                print("DB Error:", e)
+                return redirect(url_for("main.register"))
     return render_template("register.html")
 #should auto load the user once↑ accounts is down might be more touble than worth
 #Shpould I redirect them to the homepage?
@@ -114,7 +124,7 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and user.check_password(password):
             session["user_id"] = user.id
-            flash("Logg in successful!")
+            flash("Login successful!")
             return redirect(url_for("main.home"))
         else:
             flash("invalid Username or password.")
