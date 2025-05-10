@@ -1,4 +1,4 @@
-from app import db
+from .extensions import db
 from werkzeug.security import generate_password_hash, check_password_hash
 #this files purpose is to help defin the  structure of the database.
 #Classes that will represent tables will be created here.
