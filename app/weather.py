@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 #these variables come from .env file so private info ist put into the code
 load_dotenv()
 #looks into the .env file for the api key and saves it to a python variable named weather api
-
+#bug fix
 BASE_URL = os.getenv("WEATHER_API_URL")
 """ 
 #function that gets the weather
