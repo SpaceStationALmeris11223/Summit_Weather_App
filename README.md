@@ -22,7 +22,7 @@ Summit Weather App is a Flask-based web application that provides current weathe
 
 1. **Clone the repository:**
    ```powershell
-   git clone <your-repo-url>
+   git clone <https://github.com/SpaceStationALmeris11223/Summit_Weather_App>
    cd Summit_Weather_App
    ```
 2. **Create a virtual environment (optional but recommended):**
