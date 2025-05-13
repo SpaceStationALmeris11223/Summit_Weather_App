@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session,request, redirect, url_for, flash
+from flask import Blueprint, render_template, session,request, redirect, url_for, flash, jsonify
 from werkzeug.security import generate_password_hash
 from .weather import get_weather
 from .models import User
@@ -10,9 +10,14 @@ from markupsafe import escape
 from better_profanity import profanity
 
 import re
-
+# Create a Blueprint for the main routes
 main = Blueprint('main', __name__)
 
+# Define the route for the index page
+@main.route('/')
+def index():
+    # Render the index.html template for the index page
+    return render_template('index.html')
 profanity.load_censor_words()
 
 """
@@ -23,7 +28,10 @@ def home():
     latitude = 44.9778  # Example default: Minneapolis
     longitude = -93.2650
     weather_data = get_weather(latitude, longitude)
-    return render_template('index.html', weather=weather_data)
+    return render_template('index.html', 
+                         weather=weather_data,
+                         latitude=latitude,
+                         longitude=longitude)
 """
 Main Route ends↑"""
 """
@@ -158,3 +166,4 @@ def account():
     
 #if user is logged in ↓
     return render_template("account.html")
+

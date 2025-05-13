@@ -5,19 +5,23 @@ from dotenv import load_dotenv
 #↑ Allows the app to read hidden values from a .env file(Api Keys, passwords, etc.)
 import os
 #↑ Allows the app to interact with your operating system
-
 #A circular import was created so i made an extensions files to solve it 
 from .extensions import db # db = SQLAlchemy resides in here
+from flask_login import LoginManager
+
+#Initialize database 
+db = SQLAlchemy()
 #↑ creates a database object
+login_manager = LoginManager()
 def create_app():
     load_dotenv()
 #looks for ↑ file called .env adn loads any key value pairs
     app = Flask(__name__)
 
-
-
-
-
+    app.config.from_object('config.Config')#←Loads config settings
+    db.init_app(app)#←connects app to database
+    login_manager.init_app(app)
+    login_manager.login_view = 'main.login'
 
 #Creates ↓ context for the app, allows the code to safely access things ties to FLask(database)
 
@@ -26,13 +30,14 @@ def create_app():
     app.config['WEATHER_API_URL'] = os.environ.get('WEATHER_API_URL')
     app.config['WEATHER_API_KEY'] = os.environ.get('Weather_API_Key')
     #setting up sqlalchemy↓
-    basedir = os.path.abspath(os.path.dirname(__file__))
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI', 'sqlite:///weather.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #The connects ↓ the db to this app
     db.init_app(app)#←connects app to database
+
 #Register blueprints routes↓ app needs to initialize first
+
     from .routes import main
 #    ↑imports the routes Aka different pages(urls)
 #   ↓plugs in (connects) the recently imported routes to the app

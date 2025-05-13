@@ -1,0 +1,32 @@
+<!-- This is the HTML document type declaration -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Metadata and title of the page -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <!-- Link to the external CSS stylesheet -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Main heading of the login page -->
+    <h1>Login</h1>
+    <!-- Login form with POST method and action pointing to the login route -->
+    <form method="POST" action="{{ url_for('main.login') }}">
+      <!-- Username input field -->
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required />
+      <br />
+      <!-- Password input field -->
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required />
+      <br />
+      <!-- Submit button for the form -->
+      <button type="submit">Login</button>
+    </form>
+  </body>
+</html>
