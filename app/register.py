@@ -4,18 +4,6 @@ from .models  import db, User
 from markupsafe import escape
 from better_profantiy import profanity
 import re
-
-
-
-
-@main.route("/register", methods=['GET', 'POST'])
-def register():
-    if request.method =="POST":
-        
-#cleans up the form inputs↓
-        username = escape(request.form.get("username", "").strip())
-        password = request.form.get("password", "").strip()
-        
  
 def valid_username(username):
 #validate username input

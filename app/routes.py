@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, session,request, redirect, url_for, flash, jsonify
 from werkzeug.security import generate_password_hash
 from .weather import get_weather
-from .models import User, db
+from .models import User
+from .extensions import db
 from markupsafe import escape
 #blocks profanity, so no slurs etc go into the username & passwords.
 #if you want to use this just type
@@ -165,3 +166,4 @@ def account():
     
 #if user is logged in ↓
     return render_template("account.html")
+
