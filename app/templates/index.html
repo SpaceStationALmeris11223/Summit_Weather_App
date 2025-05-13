@@ -1,41 +1,90 @@
-venv\Scripts\activate
 <!-- app/templates/index.html -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Summit Weather App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summit Weather</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&family=The+Seasons:wght@400&display=swap" rel="stylesheet">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <h1>Welcome to Summit Weather!</h1>
+{% extends "layout.html" %}
+ {% block title %}Home - Summit Weather{% endblock %}
 
-    {% if weather %}
-        <h2>Current Weather:</h2>
-        <ul>
-            <li>Temperature: {{ weather.current.temperature_2m }} °F</li>
-            <li>Is Daytime: {{ 'Yes' if weather.current.is_day else 'No' }}</li>
-            <li>Wind Speed: {{ weather.current.wind_speed_10m }} mph</li>
-            <li>Wind Direction: {{ weather.current.wind_direction_10m }}°</li>
-            <li>Rain: {{ weather.current.rain }} inches</li>
-            <li>Showers: {{ weather.current.showers }} inches</li>
-            <li>Snowfall: {{ weather.current.snowfall }} inches</li>
-            <li>Weather Code: {{ weather.current.weather_code }}</li>
-        </ul>
+ {%block content %}
 
-        <h2>Forecast:</h2>
-        <ul>
-            {% for day in weather.daily.time %}
-                <li>
-                    Date: {{ day }}<br>
-                    Max Temp: {{ weather.daily.temperature_2m_max[loop.index0] }} °F<br>
-                    Min Temp: {{ weather.daily.temperature_2m_min[loop.index0] }} °F<br>
-                    Weather Code: {{ weather.daily.weather_code[loop.index0] }}
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Weather data is currently unavailable.</p>
-    {% endif %}
+    <div class="main-content">
+        <div class="weather-container">
+            <h1>Summit Weather</h1>
+        {% if weather %}
+                <div class="current-weather">
+                    <h2>Current Weather</h2>
+                    <div class="weather-grid">
+                        <div class="weather-item">
+                            <strong>Temperature:</strong><br>
+                            {{ weather.current.temperature_2m }} °F
+                        </div>
+                        <div class="weather-item">
+                            <strong>Wind Speed:</strong><br>
+                            {{ weather.current.wind_speed_10m }} mph
+                        </div>
+                        <div class="weather-item">
+                            <strong>Wind Direction:</strong><br>
+                            {{ weather.current.wind_direction_10m }}°
+                        </div>
+                        <div class="weather-item">
+                            <strong>Precipitation:</strong><br>
+                            Rain: {{ weather.current.rain }} in<br>
+                            Showers: {{ weather.current.showers }} in<br>
+                            Snowfall: {{ weather.current.snowfall }} in
+                        </div>
+                    </div>
+                </div>
+
+                <div class="forecast">
+                    <h2>Weekly Forecast</h2>
+                    <ul class="forecast-list">
+                        {% for day in weather.daily.time %}
+                            <li class="forecast-item">
+                                <strong>Date:</strong> {{ day }}<br>
+                                <strong>High:</strong> {{ weather.daily.temperature_2m_max[loop.index0] }} °F<br>
+                                <strong>Low:</strong> {{ weather.daily.temperature_2m_min[loop.index0] }} °F<br>
+                                <strong>Conditions:</strong> {{ weather.daily.weather_code[loop.index0] }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% else %}
+                <p class="error-message">Weather data is currently unavailable.</p>
+            {% endif %}
+        {% endblock %}
+        </div>
+    </div>
+{% if latitude and longitude %}
+    <script>
+        const map = L.map('map').setView([{{ latitude }}, {{ longitude }}], 10);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        const marker = L.marker([{{ latitude }}, {{ longitude }}]).addTo(map);
+    </script>
+{% endif %}
 </body>
 </html>
