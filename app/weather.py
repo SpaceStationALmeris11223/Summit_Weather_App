@@ -1,3 +1,6 @@
+
+# Import necessary modules
+
 import requests
 #↑allows use of request library
 import os
@@ -19,19 +22,7 @@ def get_weather(location):
 #→→→→→↑takes the raw json file from the api and converts it into data
  """
 
-def get_weather(latitude, longitude):
-    base_url = os.getenv('WEATHER_API_URL')
-
-    params = {
-        'latitude': latitude,
-        'longitude': longitude,
-        'current': 'temperature_2m,is_day,wind_speed_10m,wind_direction_10m,rain,showers,snowfall,weather_code',
-        'daily': 'weather_code,temperature_2m_max,temperature_2m_min',
-        'timezone': 'auto',
-        'temperature_unit': 'fahrenheit',
-        'wind_speed_unit': 'mph',
-        'precipitation_unit': 'inch',
-    }
+# Function to fetch weather data from an external API
 
     try:
         response = requests.get(base_url, params=params)

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session,request, redirect, url_for, flash
+from flask import Blueprint, render_template, session,request, redirect, url_for, flash, jsonify
 from werkzeug.security import generate_password_hash
 from .weather import get_weather
 from .models import User, db
@@ -9,9 +9,14 @@ from markupsafe import escape
 from better_profanity import profanity
 
 import re
-
+# Create a Blueprint for the main routes
 main = Blueprint('main', __name__)
 
+# Define the route for the index page
+@main.route('/')
+def index():
+    # Render the index.html template for the index page
+    return render_template('index.html')
 profanity.load_censor_words()
 
 """
