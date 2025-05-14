@@ -1,17 +1,14 @@
 #Thsi files will pull flask and other relavant tools
+from .models import User
 from flask import Flask
-
+from flask_login import LoginManager
 from dotenv import load_dotenv
 #↑ Allows the app to read hidden values from a .env file(Api Keys, passwords, etc.)
 import os
 #↑ Allows the app to interact with your operating system
 #A circular import was created so i made an extensions files to solve it 
 from .extensions import db # db = SQLAlchemy resides in here
-from flask_login import LoginManager
 
-#Initialize database 
-db = SQLAlchemy()
-#↑ creates a database object
 login_manager = LoginManager()
 def create_app():
     load_dotenv()
@@ -19,9 +16,6 @@ def create_app():
     app = Flask(__name__)
 
     app.config.from_object('config.Config')#←Loads config settings
-    db.init_app(app)#←connects app to database
-    login_manager.init_app(app)
-    login_manager.login_view = 'main.login'
 
 #Creates ↓ context for the app, allows the code to safely access things ties to FLask(database)
 
@@ -33,9 +27,15 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI', 'sqlite:///weather.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+#Initialize extensions
 #The connects ↓ the db to this app
     db.init_app(app)#←connects app to database
 
+    login_manager.init_app(app)
+    login_manager.login_view = 'main.login'
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
 #Register blueprints routes↓ app needs to initialize first
 
     from .routes import main
