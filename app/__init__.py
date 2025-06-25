@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 import os
 #↑ Allows the app to interact with your operating system
 #A circular import was created so i made an extensions files to solve it 
-from .extensions import db # db = SQLAlchemy resides in here
+from .extensions import db, login_manager # db = SQLAlchemy resides in here
 
 login_manager = LoginManager()
 def create_app():

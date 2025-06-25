@@ -61,11 +61,12 @@ def register():
             return redirect(url_for("main.register"))
 
         #create new user
-        new_user = User(username=username)
+        new_user = User(username=username, password_hash=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
         new_user.set_password(password)
         try:
-            db.session.add(new_user)
-            db.session.commit()
+      
             session["user_id"] = new_user.id #auto login
             flash("Account created!")
             return redirect(url_for("main.home"))
